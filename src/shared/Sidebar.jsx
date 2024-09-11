@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { FaHome, FaShoppingCart, FaUserAlt, FaBars, FaChevronDown, FaTimes, FaUsersCog } from 'react-icons/fa';
-import { MdContactSupport } from 'react-icons/md';
+import { FaHome, FaShoppingCart, FaBars, FaChevronDown, FaTimes, FaUsersCog } from 'react-icons/fa';
+import { MdContactSupport, MdOutlineAddShoppingCart, MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { AuthContext } from '../context/AuthProvider'; // Import AuthContext
+import { TbShoppingCartBolt, TbShoppingCartCheck } from 'react-icons/tb';
 
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(false); // Sidebar closed by default on small screens
     const [submenuOpen, setSubmenuOpen] = useState(false);
+    const { user } = useContext(AuthContext); // Access user context
 
     const toggleSidebar = () => setIsOpen(!isOpen);
     
@@ -60,12 +63,11 @@ const Sidebar = () => {
                         </Link>
                     </li>
                     <li onClick={closeSidebarOnLinkClick} className="group relative text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-2 transition-colors duration-200">
-                        <Link to='/account' className="flex items-center gap-x-4 w-full">
-                            <FaUserAlt className="w-5 h-5" />
-                            <span>Account</span>
+                        <Link to='/my-booking' className="flex items-center gap-x-4 w-full">
+                            <TbShoppingCartCheck className="w-5 h-5" />
+                            <span>My Booking</span>
                         </Link>
                     </li>
-
                     {/* Submenu for Support */}
                     <li className="text-gray-300 text-sm flex flex-col gap-x-4 cursor-pointer p-2 mt-2 hover:bg-gray-700 rounded-md transition-colors duration-200">
                         <div className="flex items-center justify-between" onClick={() => setSubmenuOpen(!submenuOpen)}>
@@ -75,7 +77,6 @@ const Sidebar = () => {
                             </div>
                             <FaChevronDown className={`transition-transform duration-300 ${submenuOpen && 'rotate-180'}`} />
                         </div>
-
                         {/* Submenu Items */}
                         {submenuOpen && (
                             <ul className="pl-8">
@@ -84,28 +85,37 @@ const Sidebar = () => {
                             </ul>
                         )}
                     </li>
-
                     <div className='divider'></div>
-
-                    {/* Admin Menus */}
-                    <li onClick={closeSidebarOnLinkClick} className="group relative text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-2 transition-colors duration-200">
-                        <Link to='/admin/dashboard' className="flex items-center gap-x-4 w-full">
-                            <FaHome className="w-5 h-5" />
-                            <span>Dashboard</span>
-                        </Link>
-                    </li>
-                    <li onClick={closeSidebarOnLinkClick} className="group relative text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-2 transition-colors duration-200">
-                        <Link to='/admin/managed-products' className="flex items-center gap-x-4 w-full">
-                            <FaShoppingCart className="w-5 h-5" />
-                            <span>Manage Products</span>
-                        </Link>
-                    </li>
-                    <li onClick={closeSidebarOnLinkClick} className="group relative text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-2 transition-colors duration-200">
-                        <Link to='/admin/accounts' className="flex items-center gap-x-4 w-full">
-                            <FaUsersCog className="w-5 h-5" />
-                            <span>Manage Accounts</span>
-                        </Link>
-                    </li>
+                    
+                    {/* Admin Menus - Display based on user role */}
+                    {user && user.role === 'Admin' && (
+                        <>
+                            <li onClick={closeSidebarOnLinkClick} className="group relative text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-2 transition-colors duration-200">
+                                <Link to='/admin/dashboard' className="flex items-center gap-x-4 w-full">
+                                    <FaHome className="w-5 h-5" />
+                                    <span>Dashboard</span>
+                                </Link>
+                            </li>
+                            <li onClick={closeSidebarOnLinkClick} className="group relative text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-2 transition-colors duration-200">
+                                <Link to='/admin/managed-products' className="flex items-center gap-x-4 w-full">
+                                    <MdOutlineAddShoppingCart className="w-5 h-5" />
+                                    <span>Manage Products</span>
+                                </Link>
+                            </li>
+                            <li onClick={closeSidebarOnLinkClick} className="group relative text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-2 transition-colors duration-200">
+                                <Link to='/admin/order-request' className="flex items-center gap-x-4 w-full">
+                                    <TbShoppingCartBolt className="w-5 h-5" />
+                                    <span>Order Request</span>
+                                </Link>
+                            </li>
+                            <li onClick={closeSidebarOnLinkClick} className="group relative text-gray-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-gray-700 rounded-md mt-2 transition-colors duration-200">
+                                <Link to='/admin/accounts' className="flex items-center gap-x-4 w-full">
+                                    <FaUsersCog className="w-5 h-5" />
+                                    <span>Manage Accounts</span>
+                                </Link>
+                            </li>
+                        </>
+                    )}
                 </ul>
             </div>
 

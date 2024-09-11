@@ -1,10 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FaSearch, FaBell, FaUserCircle, FaCartPlus } from 'react-icons/fa';
-import CartList from './CartList'; // Import your CartList component
+import CartList from './CartList';
+import { AuthContext } from '../context/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
-    const [isCartOpen, setIsCartOpen] = useState(false); // State to manage cart visibility
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [cartItemCount, setCartItemCount] = useState(0);
+    const { user, logout } = useContext(AuthContext);
+
+    useEffect(() => {
+        // Load cart from local storage and count items
+        const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        const itemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+        setCartItemCount(itemCount);
+    }, []);
+
+    const handleLogout = () => {
+        logout();
+    };
 
     return (
         <div>
@@ -23,13 +38,19 @@ const Navbar = () => {
 
                 {/* Right Side - Icons */}
                 <div className="flex items-center gap-4">
-                    {/* Add to Cart Icon */}
+                    {/* Cart Icon with Badge */}
                     <div
                         className="relative cursor-pointer"
-                        onClick={() => setIsCartOpen(!isCartOpen)} // Toggle cart on click
+                        onClick={() => setIsCartOpen(!isCartOpen)}
                     >
-                        <FaCartPlus className="text-xl" />
-                        <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1">3</span>
+                        <Link to='/cart'>
+                            <FaCartPlus className="text-xl" />
+                            {cartItemCount > 0 && (
+                                <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs rounded-full px-1">
+                                    {cartItemCount}
+                                </span>
+                            )}
+                        </Link>
                     </div>
 
                     {/* Notification Icon */}
@@ -47,9 +68,31 @@ const Navbar = () => {
                         {isProfileOpen && (
                             <div className="absolute right-0 mt-2 w-48 bg-white text-gray-700 rounded-lg shadow-lg">
                                 <ul className="py-2">
-                                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
-                                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
-                                    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+                                    {user ? (
+                                        <>
+                                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                                <Link to="/profile">Profile</Link>
+                                            </li>
+                                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                                <Link to="/settings">Settings</Link>
+                                            </li>
+                                            {user.role === 'Admin' && (
+                                                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                                    <Link to="/admin">Admin Dashboard</Link>
+                                                </li>
+                                            )}
+                                            <li
+                                                onClick={handleLogout}
+                                                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                            >
+                                                Logout
+                                            </li>
+                                        </>
+                                    ) : (
+                                        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                            <Link to="/signin">Login</Link>
+                                        </li>
+                                    )}
                                 </ul>
                             </div>
                         )}
@@ -57,12 +100,7 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            {/* Cart List - Conditional Rendering */}
-            {isCartOpen && (
-                <div className="absolute right-0 top-16 w-80 bg-white text-gray-700 rounded-lg shadow-lg p-4">
-                    <CartList /> {/* Display CartList when the cart icon is clicked */}
-                </div>
-            )}
+
         </div>
     );
 };
