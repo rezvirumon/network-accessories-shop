@@ -70,7 +70,7 @@ const Dashboard = () => {
                 <div>
                     <h2 className="text-xl font-semibold">{title}</h2>
                     {loading ? (
-                        <p className="text-xl font-bold mt-2 text-gray-400">
+                        <p className="text-xl font-bold mt-2 ">
                             <span className="loading loading-ball loading-xs"></span>
                             <span className="loading loading-ball loading-sm"></span>
                             <span className="loading loading-ball loading-md"></span>

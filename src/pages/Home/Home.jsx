@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaLaptop, FaMobileAlt, FaTabletAlt, FaHeadphones, FaCamera, FaHome, FaTshirt } from 'react-icons/fa'; // Import more icons as needed
 import { BsFillRouterFill } from 'react-icons/bs';
+import Swiper from './Swiper';
+import { MdCable } from 'react-icons/md';
 
 const iconMap = {
     Router: <BsFillRouterFill className="w-12 h-12 text-blue-500" />,
@@ -13,6 +15,7 @@ const iconMap = {
     Home: <FaHome className="w-12 h-12 text-blue-500" />,
     Clothing: <FaTshirt className="w-12 h-12 text-blue-500" />,
     Laptop: <FaLaptop className="w-12 h-12 text-blue-500" />,
+    Cable: <MdCable className="w-12 h-12 text-blue-500" />,
     // Add more category-to-icon mappings as needed
 };
 
@@ -49,19 +52,14 @@ const Home = () => {
 
     return (
         <div className="p-6">
-            {/* Hero Banner */}
-            <div className="bg-blue-500 text-white p-12 text-center mb-6 rounded-lg shadow-lg">
-                <h1 className="text-4xl font-bold">Welcome to Our Store!</h1>
-                <p className="mt-2 text-lg">Discover the best products at amazing prices.</p>
-                <Link to="/shop" className="mt-4 inline-block bg-white text-blue-500 py-2 px-4 rounded shadow hover:bg-gray-100">
-                    Shop Now
-                </Link>
-            </div>
+            <Swiper>
+
+            </Swiper>
 
             {/* Categories */}
             <section className="mb-12">
-                <h2 className="text-2xl font-semibold mb-4">Shop by Category</h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-10">
                     {categories.length > 0 ? (
                         categories.map(category => (
                             <Link key={category} to={`/category/${category}`} className="block">
@@ -79,11 +77,8 @@ const Home = () => {
                 </div>
             </section>
 
-            {/* Promotions */}
-            <section className="bg-yellow-100 p-6 rounded-lg shadow-lg">
-                <h2 className="text-2xl font-semibold mb-4">Current Promotions</h2>
-                <p>Check out our latest offers and discounts. Limited time only!</p>
-            </section>
+
+           
         </div>
     );
 };
