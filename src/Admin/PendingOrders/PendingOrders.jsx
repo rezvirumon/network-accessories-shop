@@ -9,7 +9,7 @@ const PendingOrders = () => {
                 // Fetch orders data
                 const response = await fetch('http://localhost:3001/api/orders');
                 const data = await response.json();
-                
+
                 // Filter and sort pending orders
                 const filteredOrders = data.orders
                     .filter(order => order.status === 'Pending')
@@ -33,7 +33,8 @@ const PendingOrders = () => {
                         <tr className="bg-base-200">
                             <th className="p-2 border">Order ID</th>
                             <th className="p-2 border">Email</th>
-                            
+                            <th className="p-2 border">Product Name</th>
+                            <th className="p-2 border">Order Amount</th>
                             <th className="p-2 border">Date</th>
                         </tr>
                     </thead>
@@ -42,7 +43,8 @@ const PendingOrders = () => {
                             <tr key={order._id} className="hover:bg-base-100">
                                 <td className="p-2 border">{order._id}</td>
                                 <td className="p-2 border">{order.userEmail}</td>
-                            
+                                <td className="p-2 border">{order.productName || 'N/A'}</td> {/* Assuming productName exists */}
+                                <td className="p-2 border">${(order.totalAmount || 0).toFixed(2)}</td> {/* Default to 0 if totalAmount is undefined */}
                                 <td className="p-2 border">{new Date(order.createdAt).toLocaleDateString()}</td>
                             </tr>
                         ))}

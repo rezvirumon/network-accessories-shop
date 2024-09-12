@@ -17,6 +17,7 @@ import CartList from '../shared/CartList';
 import Dashboard from '../Admin/Dashboard/Dashboard';
 import OrderRequest from '../Admin/OrderRequest/OrderRequest';
 import MyBooking from '../pages/MyBooking/MyBooking';
+import CategoryProducts from '../pages/Home/CategoryProducts';
 
 
 
@@ -37,9 +38,14 @@ const router = createBrowserRouter([
                 path: "profile",
                 element: <PrivateRoute element={<Profile />} />
             },
+            {
+                path: "/category/:categoryId", // New route
+                element: <CategoryProducts /> // New component
+            }
+
         ]
     },
-   
+
     {
         path: "/admin",
         element: <DashboardRoot />,
@@ -61,7 +67,7 @@ const router = createBrowserRouter([
                 path: "order-request",
                 element: <AdminRoute element={<OrderRequest />} />
             },
-            
+
         ]
     },
 ]);
