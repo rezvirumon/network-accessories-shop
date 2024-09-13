@@ -252,6 +252,7 @@ const AddProductForm = ({ newProduct, handleInputChange, handleImageChange, hand
 // ProductsTable component for displaying the product list
 const ProductsTable = ({ products, openEditModal, handleDeleteProduct }) => (
     <div className="overflow-x-auto mb-8">
+        <h3>Total Product </h3>
         <table className="table-auto w-full">
             <thead>
                 <tr>
@@ -269,16 +270,18 @@ const ProductsTable = ({ products, openEditModal, handleDeleteProduct }) => (
                 {products.map(product => (
                     <tr key={product._id}>
                         <td className="border px-4 py-2">
-                            <input type="checkbox" className="form-checkbox" />
+                            <input type="checkbox" />
                         </td>
                         <td className="border px-4 py-2">{product.name}</td>
                         <td className="border px-4 py-2">{product.description}</td>
                         <td className="border px-4 py-2">{product.category}</td>
                         <td className="border px-4 py-2">{product.stock}</td>
-                        <td className="border px-4 py-2">${product.price.toFixed(2)}</td>
+                        <td className="border px-4 py-2">${product.price}</td>
                         <td className="border px-4 py-2">
                             {product.images.map((img, index) => (
-                                <img key={index} src={img} alt={`Product Image ${index + 1}`} className="w-12 h-12" />
+                                <div key={index}>
+                                    <img src={img} alt={`Product Image ${index + 1}`} className="w-16 h-16 object-cover" />
+                                </div>
                             ))}
                         </td>
                         <td className="border px-4 py-2">
@@ -302,10 +305,10 @@ const ProductsTable = ({ products, openEditModal, handleDeleteProduct }) => (
     </div>
 );
 
-// EditProductModal component for editing an existing product
+// EditProductModal component for editing a product
 const EditProductModal = ({ editProduct, handleEditInputChange, handleEditImageChange, handleEditProduct, closeModal }) => (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-        <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
+    <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+        <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
             <h2 className="text-2xl font-semibold mb-4">Edit Product</h2>
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
                 <input
@@ -359,12 +362,12 @@ const EditProductModal = ({ editProduct, handleEditInputChange, handleEditImageC
                     />
                 ))}
             </div>
-            <div className="mt-4">
+            <div className="flex justify-end mt-4">
                 <button
                     onClick={handleEditProduct}
                     className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mr-2"
                 >
-                    Save Changes
+                    Save
                 </button>
                 <button
                     onClick={closeModal}

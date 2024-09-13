@@ -4,7 +4,8 @@ import axios from 'axios';
 import { FaLaptop, FaMobileAlt, FaTabletAlt, FaHeadphones, FaCamera, FaHome, FaTshirt } from 'react-icons/fa'; // Import more icons as needed
 import { BsFillRouterFill } from 'react-icons/bs';
 import Swiper from './Swiper';
-import { MdCable } from 'react-icons/md';
+import { MdCable, MdKeyboard, MdMouse } from 'react-icons/md';
+import Products from '../Products/Products';
 
 const iconMap = {
     Router: <BsFillRouterFill className="w-12 h-12 text-blue-500" />,
@@ -16,6 +17,8 @@ const iconMap = {
     Clothing: <FaTshirt className="w-12 h-12 text-blue-500" />,
     Laptop: <FaLaptop className="w-12 h-12 text-blue-500" />,
     Cable: <MdCable className="w-12 h-12 text-blue-500" />,
+    Mouse: <MdMouse className="w-12 h-12 text-blue-500" />,
+    Keyboard: <MdKeyboard className="w-12 h-12 text-blue-500" />,
     // Add more category-to-icon mappings as needed
 };
 
@@ -51,7 +54,7 @@ const Home = () => {
     if (error) return <p className="text-center text-lg text-red-600">{error}</p>;
 
     return (
-        <div className="p-6">
+        <div className="p-6 ">
             <Swiper>
 
             </Swiper>
@@ -59,11 +62,11 @@ const Home = () => {
             {/* Categories */}
             <section className="mb-12">
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 my-10">
                     {categories.length > 0 ? (
                         categories.map(category => (
                             <Link key={category} to={`/category/${category}`} className="block">
-                                <div className="bg-white p-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 text-center">
+                                <div className="shadow-xl rounded-xl hover:border gap-3 p-5 flex justify-center items-center transition-transform transform hover:scale-105 text-center">
                                     <div className="mb-4 flex justify-center">
                                         {iconMap[category] || <BsFillRouterFill className="w-12 h-12 text-blue-500" />} {/* Default icon if category not found */}
                                     </div>
@@ -77,7 +80,9 @@ const Home = () => {
                 </div>
             </section>
 
-
+            <section>
+                <Products></Products>
+            </section>
            
         </div>
     );

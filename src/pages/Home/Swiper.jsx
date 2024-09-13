@@ -85,7 +85,7 @@ const Swiper = () => {
         <div className="relative w-full overflow-hidden bg-white rounded-lg">
             <div className="flex items-center w-full h-[50vh] overflow-hidden">
                 {products.length > 0 && (
-                    <div className="w-full">
+                    <div className="w-full lg:w-[60vw] mx-auto">
                         <Fade
                             key={currentIndex}
                             duration={500} // Duration of the fade effect
