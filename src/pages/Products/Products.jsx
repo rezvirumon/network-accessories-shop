@@ -5,6 +5,7 @@ import { FaBangladeshiTakaSign } from 'react-icons/fa6';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
+    const [isExpanded, setIsExpanded] = useState(false);
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -47,7 +48,7 @@ const Products = () => {
                     ...prevIndexes,
                     [product._id]: (prevIndexes[product._id] + 1) % product.images.length
                 }));
-            }, 5000); // Change image every 5 seconds
+            }, 4000); // Change image every 5 seconds
         });
 
         // Clear intervals when component unmounts
@@ -72,37 +73,44 @@ const Products = () => {
     if (loading) return <p className="text-center text-lg">Loading products...</p>;
     if (error) return <p className="text-center text-lg text-red-600">{error}</p>;
 
+
+    const toggleReadMore = () => {
+        setIsExpanded(!isExpanded);
+    };
+
     return (
         <div className="p-5 container mx-auto">
-            <h1 className="text-3xl font-bold mb-6 text-center">Products List</h1>
+            <div className=''>
+                <div className='flex justify-between bg-base-300 p-5 my-10 rounded-xl'>
+                    {/* Search Bar */}
+                    <div className="lg:w-64">
+                        <input
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                            placeholder="Search for products..."
+                            className="w-full p-2 border rounded"
+                        />
+                    </div>
 
-            {/* Search Bar */}
-            <div className="mb-6">
-                <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    placeholder="Search for products..."
-                    className="w-full p-2 mb-4 border rounded"
-                />
-            </div>
+                    {/* Category Links */}
+                    <div className="">
 
-            {/* Category Links */}
-            <div className="mb-6">
-                <h2 className="text-2xl font-semibold mb-4">Shop by Category</h2>
-                <div className="flex flex-wrap gap-4 mb-6">
-                    {categories.map(category => (
-                        <Link
-                            key={category}
-                            to={`/category/${category}`}
-                            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                        >
-                            {category}
-                        </Link>
-                    ))}
+                        <div className="flex flex-wrap gap-4">
+                            {categories.map(category => (
+                                <Link
+                                    key={category}
+                                    to={`/category/${category}`}
+                                    className="bg-base-200 text-white py-2 px-4 rounded hover:bg-base-300"
+                                >
+                                    {category}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-            </div>
 
+            </div>
             {/* Products Listing */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {filteredProducts.map(product => (
@@ -111,10 +119,20 @@ const Products = () => {
                             <img
                                 src={product.images[imageIndexes[product._id]] || '/default-product-image.jpg'}
                                 alt={product.name}
-                                className=" object-contain mx-auto h-[250px] "
+                                className=" object-contain mx-auto h-[250px] w-full transition-transform transform hover:scale-105"
                             />
-                            <h2 className="text-xl font-semibold h-10  mb-5">{product.name}</h2>
-                            <p className="text-sm  mb-2 h-20">{product.description}</p>
+                            <h2 className="text-xl font-semibold h-10  mb-5 text-blue-600">{product.name}</h2>
+                            <p className="text-sm mb-2 h-20">
+                                {isExpanded ? product.description : product.description.slice(0, 70)}
+                                {product.description.length > 50 && (
+                                    <span
+                                        className="text-blue-500 cursor-pointer ml-1"
+                                        onClick={toggleReadMore}
+                                    >
+                                        {isExpanded ? ' Show Less' : '...Read More'}
+                                    </span>
+                                )}
+                            </p>
                             <div className='flex justify-between items-center'>
                                 <p className="text-lg font-bold text-blue-600 mb-2 flex items-center">
                                     Price:{product.price.toFixed(2)}<FaBangladeshiTakaSign></FaBangladeshiTakaSign>

@@ -55,6 +55,7 @@ const Accounts = () => {
                         <img src={account.photoURL} alt=""  className='rounded-full w-24 mx-auto'/>
                         <h2 className="text-xl font-bold mb-2">{account.name}</h2>
                         <p className="text-gray-600 mb-2">{account.email}</p>
+                        <p className="text-gray-600 mb-2">{account.deliveryAddress}</p>
                         <p className="text-lg font-bold mb-2">
                             Balance: ${account.balance ? account.balance.toFixed(2) : 'N/A'}
                         </p>

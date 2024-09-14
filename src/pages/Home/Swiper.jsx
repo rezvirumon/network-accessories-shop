@@ -100,7 +100,7 @@ const Swiper = () => {
                                     <img
                                         src={products[currentIndex].images[currentImageIndex]} // Display the current image for the current product
                                         alt={products[currentIndex].name}
-                                        className="w-96"
+                                        className="w-64"
                                     />
                                 </div>
                             </div>

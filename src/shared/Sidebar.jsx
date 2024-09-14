@@ -30,7 +30,7 @@ const Sidebar = () => {
 
             {/* Sidebar */}
             <div
-                className={`bg-gradient-to-t from-purple-800 text-white h-screen p-5 pt-8 ${isOpen ? 'w-64' : 'lg:left-0 -left-16 w-0'} lg:w-64 fixed lg:relative z-40 lg:z-auto transition-all duration-500 ease-in-out`}
+                className={`bg-base-300 text-white h-screen p-5 pt-8 ${isOpen ? 'w-64' : 'lg:left-0 -left-16 w-0'} lg:w-64 fixed lg:relative z-50 lg:z-auto transition-all duration-500 ease-in-out`}
             >
                 {/* Close icon for small screens */}
                 {isOpen && (

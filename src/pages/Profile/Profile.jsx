@@ -9,7 +9,8 @@ const Profile = () => {
     const [formData, setFormData] = useState({
         name: '',
         photoURL: '',
-        mobile: ''
+        mobile: '',
+        address: '' // New field for delivery address
     });
     const [error, setError] = useState('');
 
@@ -22,13 +23,13 @@ const Profile = () => {
                     setFormData({
                         name: response.data.name || '',
                         photoURL: response.data.photoURL || '',
-                        mobile: response.data.mobile || ''
+                        mobile: response.data.mobile || '',
+                        deliveryAddress: response.data.deliveryAddress || '' // Fetch the deliveryAddress
                     });
                 })
                 .catch(error => console.error('Error fetching user profile:', error));
         }
     }, [user]);
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevData => ({ ...prevData, [name]: value }));
@@ -49,7 +50,6 @@ const Profile = () => {
                 setEditing(false);
             })
             .catch(error => {
-                // console.error('Error updating user profile:', error);
                 setError('Error updating profile');
             });
     };
@@ -106,6 +106,16 @@ const Profile = () => {
                             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
                         />
                     </div>
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700">Delivery Address:</label>
+                        <input
+                            type="text"
+                            name="deliveryAddress"
+                            value={formData.deliveryAddress}
+                            onChange={handleInputChange}
+                            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2"
+                        />
+                    </div>
                     {error && <p className="text-red-500 text-sm">{error}</p>}
                     <button
                         type="submit"
@@ -119,6 +129,7 @@ const Profile = () => {
                     <span className='badge bg-green-600 text-white font-semibold'>{profile?.status}</span>
                     <p className="text-lg font-medium">Name: {profile?.name}</p>
                     <p className="text-lg font-medium">Mobile: {profile?.mobile}</p>
+                    <p className="text-lg font-medium">Delivery Address: {profile?.deliveryAddress}</p>
                     <button
                         onClick={() => setEditing(true)}
                         className="mt-4 bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700"

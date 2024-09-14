@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FaLaptop, FaMobileAlt, FaTabletAlt, FaHeadphones, FaCamera, FaHome, FaTshirt } from 'react-icons/fa'; // Import more icons as needed
 import { BsFillRouterFill } from 'react-icons/bs';
 import Swiper from './Swiper';
-import { MdCable, MdKeyboard, MdMouse } from 'react-icons/md';
+import { MdCable, MdHeadset, MdKeyboard, MdMouse } from 'react-icons/md';
 import Products from '../Products/Products';
 
 const iconMap = {
@@ -19,6 +19,7 @@ const iconMap = {
     Cable: <MdCable className="w-12 h-12 text-blue-500" />,
     Mouse: <MdMouse className="w-12 h-12 text-blue-500" />,
     Keyboard: <MdKeyboard className="w-12 h-12 text-blue-500" />,
+    Headset: <MdHeadset className="w-12 h-12 text-blue-500" />,
     // Add more category-to-icon mappings as needed
 };
 

@@ -81,7 +81,7 @@ const Dashboard = () => {
                     )}
                 </div>
                 <div>
-                    <Link to={link} className={`btn rounded-full text-${color}-500 font-extrabold text-xl`}>
+                    <Link to={link} className={`text-${color}-500 font-extrabold text-xl`}>
                         <FaEye />
                     </Link>
                 </div>
