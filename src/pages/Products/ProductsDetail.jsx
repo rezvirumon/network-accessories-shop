@@ -56,7 +56,7 @@ const ProductsDetail = () => {
                     <img
                         src={selectedImage}
                         alt={product.name}
-                        className="w-full h-[500px] rounded-lg object-cover bg-white"
+                        className="w-full lg:h-[500px] rounded-lg object-cover bg-white"
                     />
                 </div>
                 <div className="flex-1">

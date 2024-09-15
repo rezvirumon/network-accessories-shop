@@ -48,7 +48,7 @@ const Products = () => {
                     ...prevIndexes,
                     [product._id]: (prevIndexes[product._id] + 1) % product.images.length
                 }));
-            }, 4000); // Change image every 5 seconds
+            }, 4000); // Change image every 4 seconds
         });
 
         // Clear intervals when component unmounts
@@ -67,41 +67,40 @@ const Products = () => {
     };
 
     const filteredProducts = displayedProducts.filter(product =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     if (loading) return <p className="text-center text-lg">Loading products...</p>;
     if (error) return <p className="text-center text-lg text-red-600">{error}</p>;
-
 
     const toggleReadMore = () => {
         setIsExpanded(!isExpanded);
     };
 
     return (
-        <div className="p-5 container mx-auto">
+        <div className="lg:p-5 container mx-auto">
             <div className=''>
-                <div className='flex justify-between bg-base-300 p-5 my-10 rounded-xl'>
+                <div className='lg:flex justify-between bg-gray-300 p-5 my-10 rounded-xl'>
                     {/* Search Bar */}
-                    <div className="lg:w-64">
+                    <div className="lg:w-64 mb-5 lg:mb-0">
                         <input
                             type="text"
                             value={searchTerm}
                             onChange={handleSearch}
-                            placeholder="Search for products..."
-                            className="w-full p-2 border rounded"
+                            placeholder="Search for products or categories..."
+                            className="input input-bordered w-full bg-white"
                         />
                     </div>
 
                     {/* Category Links */}
                     <div className="">
-
                         <div className="flex flex-wrap gap-4">
                             {categories.map(category => (
                                 <Link
                                     key={category}
                                     to={`/category/${category}`}
-                                    className="bg-base-200 text-white py-2 px-4 rounded hover:bg-base-300"
+                                    className="bg-gray-600 text-white py-2 px-4 rounded hover:bg-gray-800"
                                 >
                                     {category}
                                 </Link>
@@ -109,22 +108,22 @@ const Products = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
+
             {/* Products Listing */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {filteredProducts.map(product => (
-                    <div key={product._id} className="w-[350px]  bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow">
+                    <div key={product._id} className="w-[350px] bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow">
                         <Link to={`/products/${product._id}`} className="block p-4">
                             <img
                                 src={product.images[imageIndexes[product._id]] || '/default-product-image.jpg'}
                                 alt={product.name}
-                                className=" object-contain mx-auto h-[250px] w-full transition-transform transform hover:scale-105"
+                                className="object-contain mx-auto h-[250px] w-full transition-transform transform hover:scale-105"
                             />
-                            <h2 className="text-xl font-semibold h-10  mb-5 text-blue-600">{product.name}</h2>
+                            <h2 className="text-xl font-semibold h-10 mb-5 text-blue-600">{product.name}</h2>
                             <p className="text-sm mb-2 h-20">
                                 {isExpanded ? product.description : product.description.slice(0, 70)}
-                                {product.description.length > 50 && (
+                                {product.description.length > 70 && (
                                     <span
                                         className="text-blue-500 cursor-pointer ml-1"
                                         onClick={toggleReadMore}
@@ -135,7 +134,7 @@ const Products = () => {
                             </p>
                             <div className='flex justify-between items-center'>
                                 <p className="text-lg font-bold text-blue-600 mb-2 flex items-center">
-                                    Price:{product.price.toFixed(2)}<FaBangladeshiTakaSign></FaBangladeshiTakaSign>
+                                    Price: {product.price.toFixed(2)} <FaBangladeshiTakaSign />
                                 </p>
                                 <p className={`font-semibold ${product.stock > 0 ? 'text-green-600' : 'text-red-600'}`}>
                                     {product.stock > 0 ? `In Stock: ${product.stock}` : 'Out of Stock'}

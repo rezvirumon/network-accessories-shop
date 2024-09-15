@@ -30,21 +30,14 @@ const CartList = () => {
     const handleQuantityChange = (id, amount) => {
         const updatedCart = cartItems.map(item => {
             if (item.id === id) {
-                // Calculate the updated quantity
                 const updatedQuantity = item.quantity + amount;
-                
-                // Ensure quantity is at least 1 (or you can add more stock validation here if needed)
                 const newQuantity = Math.max(updatedQuantity, 1);
-                
                 return { ...item, quantity: newQuantity };
             }
             return item;
         });
-    
-        // Update the cart in localStorage
+
         localStorage.setItem('cart', JSON.stringify(updatedCart));
-        
-        // Update the state and recalculate total price
         setCartItems(updatedCart);
         calculateTotal(updatedCart);
     };
@@ -88,44 +81,46 @@ const CartList = () => {
     }
 
     return (
-        <div className='container mx-auto'>
-            <h3 className='text-center my-3 text-xl font-bold py-3 text-yellow-600'>
+        <div className="container mx-auto px-4 lg:px-8 py-4 w-[95vw]">
+            <h3 className="text-center my-3 text-xl font-bold py-3 text-yellow-600">
                 Your Cart <span>({cartItems.length}) items</span>
             </h3>
             <div className="overflow-x-auto">
-                <table className="table w-full">
-                    <thead>
+                <table className="table w-full border-collapse md:table-fixed">
+                    <thead className="bg-gray-100 text-sm md:text-base">
                         <tr>
-                            <th>Item</th>
-                            <th>Price</th>
-                            <th>Quantity</th>
-                            <th>Total</th>
-                            <th>Actions</th>
+                            <th className="py-2 px-4 border-b">Item</th>
+                            <th className="py-2 px-4 border-b">Price</th>
+                            <th className="py-2 px-4 border-b">Quantity</th>
+                            <th className="py-2 px-4 border-b">Total</th>
+                            <th className="py-2 px-4 border-b">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="text-sm md:text-base">
                         {cartItems.map((item) => (
-                            <tr key={item.id}> {/* Ensure the key is unique */}
-                                <td>
+                            <tr key={item.id}>
+                                <td className="py-2 px-4 border-b">
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
                                             <div className="mask mask-squircle h-12 w-12">
-                                                <img src={item.images[0]} alt="product" />
+                                                <img src={item.images[0]} alt="product" className="object-cover" />
                                             </div>
                                         </div>
                                         <div>
-                                            <div className="text-xl font-bold">{item.name}</div>
+                                            <div className="text-lg font-bold">{item.name}</div>
                                             <div className="text-sm text-yellow-600">{item.description}</div>
-                                            <div className="text-sm opacity-50">Category: {item.category}</div>
+                                            <div className="text-xs opacity-50">Category: {item.category}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td><span className='flex items-center gap-2'><FaBangladeshiTakaSign />{item.price}</span></td>
-                                <td>
-                                    <div className="border flex justify-evenly items-center rounded-lg">
+                                <td className="py-2 px-4 border-b">
+                                    <span className="flex items-center gap-2"><FaBangladeshiTakaSign />{item.price}</span>
+                                </td>
+                                <td className="py-2 px-4 border-b">
+                                    <div className="flex items-center justify-between border rounded-lg">
                                         <button
                                             onClick={() => handleQuantityChange(item.id, -1)}
-                                            className="px-3 py-1 text-xl font-semibold"
+                                            className="px-3 py-1 text-xl font-semibold disabled:opacity-50"
                                             disabled={item.quantity <= 1}
                                         >
                                             -
@@ -139,13 +134,15 @@ const CartList = () => {
                                         </button>
                                     </div>
                                 </td>
-                                <td><span className='flex items-center gap-2'><FaBangladeshiTakaSign />{item.price * item.quantity}</span></td>
-                                <td>
+                                <td className="py-2 px-4 border-b">
+                                    <span className="flex items-center gap-2"><FaBangladeshiTakaSign />{item.price * item.quantity}</span>
+                                </td>
+                                <td className="py-2 px-4 border-b">
                                     <button
                                         onClick={() => handleRemoveItem(item.id)}
                                         className="text-red-500 hover:text-red-700"
                                     >
-                                        <IoClose />
+                                        <IoClose size={20} />
                                     </button>
                                 </td>
                             </tr>
@@ -153,9 +150,9 @@ const CartList = () => {
                     </tbody>
                 </table>
                 <div className="text-right mt-4">
-                    <h3 className='text-xl'>Total: <span className='flex items-center gap-2'><FaBangladeshiTakaSign />{totalPrice}</span></h3>
+                    <h3 className="text-lg md:text-xl">Total: <span className="flex items-center gap-2"><FaBangladeshiTakaSign />{totalPrice}</span></h3>
                     <button
-                        className='bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg mt-3'
+                        className="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg mt-3 text-sm md:text-base"
                         onClick={handleCheckout}
                     >
                         Checkout

@@ -27,13 +27,34 @@ const router = createBrowserRouter([
         element: <Root />,
         errorElement: <Error />,
         children: [
-            { path: "/", element: <Home /> },
-            { path: "products", element: <Products /> },
-            { path: "products/:id", element: <ProductsDetail /> },
-            { path: "my-booking", element: <MyBooking /> },
-            { path: "cart", element: <CartList /> },
-            { path: "signin", element: <SignIn /> },
-            { path: "signup", element: <SignUp /> },
+            {
+                path: "/",
+                element: <Home />
+            },
+            {
+                path: "products",
+                element: <Products />
+            },
+            {
+                path: "products/:id",
+                element: <ProductsDetail />
+            },
+            {
+                path: "my-booking",
+                element: <PrivateRoute element={<MyBooking />} />
+            },
+            {
+                path: "cart",
+                element: <CartList />
+            },
+            {
+                path: "signin",
+                element: <SignIn />
+            },
+            {
+                path: "signup",
+                element: <SignUp />
+            },
             {
                 path: "profile",
                 element: <PrivateRoute element={<Profile />} />

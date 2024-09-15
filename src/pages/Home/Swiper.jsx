@@ -83,7 +83,7 @@ const Swiper = () => {
 
     return (
         <div className="relative w-full overflow-hidden bg-white rounded-lg">
-            <div className="flex items-center w-full h-[50vh] overflow-hidden">
+            <div className="flex items-center lg:w-full h-[50vh] overflow-hidden">
                 {products.length > 0 && (
                     <div className="w-full lg:w-[60vw] mx-auto">
                         <Fade
@@ -92,10 +92,10 @@ const Swiper = () => {
                             triggerOnce={true} // Trigger animation only once
                         >
                             <div className="transition-transform duration-500 ease-in-out">
-                                <div className='flex justify-around items-center p-6'>
+                                <div className='lg:flex justify-around items-center p-6'>
                                     <div className="flex flex-col">
-                                        <h3 className="text-5xl text-yellow-500 font-bold mb-5">{products[currentIndex].name}</h3>
-                                        <p className='text-xl font-semibold'>{products[currentIndex].description}</p>
+                                        <h3 className="text-2xl lg:text-5xl text-yellow-500 font-bold mb-5">{products[currentIndex].name}</h3>
+                                        <p className='text-sm mb-10 lg:mb-0 lg:text-xl font-semibold'>{products[currentIndex].description}</p>
                                     </div>
                                     <img
                                         src={products[currentIndex].images[currentImageIndex]} // Display the current image for the current product
@@ -105,7 +105,7 @@ const Swiper = () => {
                                 </div>
                             </div>
                         </Fade>
-                        <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
+                        <div className="absolute left-5 right-5 bottom-2 lg:top-1/2 flex -translate-y-1/2 transform justify-between">
                             <button onClick={handlePrev} className="btn btn-circle">❮</button>
                             <button onClick={handleNext} className="btn btn-circle">❯</button>
                         </div>

@@ -128,6 +128,7 @@ const Profile = () => {
                 <div className="text-center">
                     <span className='badge bg-green-600 text-white font-semibold'>{profile?.status}</span>
                     <p className="text-lg font-medium">Name: {profile?.name}</p>
+                    <p className="text-lg font-medium">Email: {profile?.email}</p>
                     <p className="text-lg font-medium">Mobile: {profile?.mobile}</p>
                     <p className="text-lg font-medium">Delivery Address: {profile?.deliveryAddress}</p>
                     <button
